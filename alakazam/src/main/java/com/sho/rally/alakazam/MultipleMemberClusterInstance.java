@@ -5,7 +5,7 @@ import java.util.Map;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
-public class MultipleClusterInstance {
+public class MultipleMemberClusterInstance {
 	
 	public static void main(String[] args) {
 		// Create first member in our cluster
@@ -46,8 +46,8 @@ public class MultipleClusterInstance {
 		}
 		
 		// Shutdown clusters
-//		instanceA.shutdown();
-//		instanceB.shutdown();
+		instanceA.shutdown();
+		instanceB.shutdown();
 	}
 
 }

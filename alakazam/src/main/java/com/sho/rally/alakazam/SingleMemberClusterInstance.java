@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class SingleClusterInstance {
+public class SingleMemberClusterInstance {
 	
 	public static void main(String[] args) {
 		
-		// Single instance in out cluster
+		// Single instance in our cluster
 		HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance();
 		
 		// Map
@@ -67,6 +67,6 @@ public class SingleClusterInstance {
 			System.out.println(integer);
 		}
 		
-//		hazelcastInstance.shutdown();
+		hazelcastInstance.shutdown();
 	}
 }
