@@ -11,8 +11,11 @@ import java.util.Set;
 public class SingleClusterInstance {
 	
 	public static void main(String[] args) {
+		
+		// Single instance in out cluster
 		HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance();
 		
+		// Map
 		Map<Integer, String> customers = hazelcastInstance.getMap("customers");
 		
 		customers.put(1, "Joe");
@@ -24,6 +27,7 @@ public class SingleClusterInstance {
 		
 		System.out.println();
 		
+		// Queue
 		Queue<String> queueCustomers = hazelcastInstance.getQueue("customers");
 		
 		queueCustomers.offer("Tom");
@@ -36,11 +40,13 @@ public class SingleClusterInstance {
 		
 		System.out.println();
 		
+		// List
 		List<String> shows = hazelcastInstance.getList("shows");
 		
 		shows.add("Ray Donovan");
 		shows.add("The Affair");
 		shows.add("Dexter");
+		shows.add("Penny Dreadful");
 		
 		for (String showStr : shows) {
 			System.out.println(showStr);
@@ -48,6 +54,7 @@ public class SingleClusterInstance {
 		
 		System.out.println();
 		
+		// Set
 		Set<Integer> integerSet = hazelcastInstance.getSet("integerSet");
 		
 		integerSet.add(new Integer(1));
@@ -60,6 +67,6 @@ public class SingleClusterInstance {
 			System.out.println(integer);
 		}
 		
-		hazelcastInstance.shutdown();
+//		hazelcastInstance.shutdown();
 	}
 }

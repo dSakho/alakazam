@@ -8,30 +8,46 @@ import com.hazelcast.core.HazelcastInstance;
 public class MultipleClusterInstance {
 	
 	public static void main(String[] args) {
+		// Create first member in our cluster
 		HazelcastInstance instanceA = Hazelcast.newHazelcastInstance();
 		
-		Map<String, String> capitalsAndStates =  instanceA.getMap("capitalsAndStates");
+		// Create a capitals map from the cluster
+		Map<String, String> us_capitals_1 =  instanceA.getMap("capitals");
 		
-		capitalsAndStates.put("Hartford", "Connecticut");
-		capitalsAndStates.put("Sacramento", "California");
-		capitalsAndStates.put("Albany", "New York");
-		capitalsAndStates.put("Trenton", "New Jersey");
-		capitalsAndStates.put("Springfield", "Illinois");
-		capitalsAndStates.put("Honolulu", "Hawaii");
+		// Populate the map
+		us_capitals_1.put("Hartford", "Connecticut");
+		us_capitals_1.put("Sacramento", "California");
+		us_capitals_1.put("Albany", "New York");
+		us_capitals_1.put("Trenton", "New Jersey");
+		us_capitals_1.put("Springfield", "Illinois");
+		us_capitals_1.put("Honolulu", "Hawaii");
 		
+		// Create second member in our cluster
 		HazelcastInstance instanceB = Hazelcast.newHazelcastInstance();
 		
-		Map<String, String> capitalsAndStatesB =  instanceB.getMap("capitalsAndStates");
+		// Retrieve the capitals map and modify it in this cluster
+		Map<String, String> us_capitals_2 =  instanceB.getMap("capitals");
 		
-		capitalsAndStatesB.put("Columbus", "Ohio");
+		// Add a capital
+		us_capitals_2.put("Columbus", "Ohio");
 		
-		for (Map.Entry<String, String> capitalsEntry : capitalsAndStatesB.entrySet()) {
+		// Sysout the entire capitals_2 map
+		for (Map.Entry<String, String> capitalsEntry : us_capitals_2.entrySet()) {
 			System.out.println(capitalsEntry.getKey() + " - " + capitalsEntry.getValue());
 		}
 		
-		instanceA.shutdown();
-		instanceB.shutdown();
+		// Remove a few capitals
+		us_capitals_2.remove("Trenton");
+		us_capitals_2.remove("Hartford");
 		
+		// Sysout the entire capitals_1 map
+		for (Map.Entry<String, String> capitalsEntry : us_capitals_1.entrySet()) {
+			System.out.println(capitalsEntry.getKey() + " - " + capitalsEntry.getValue());
+		}
+		
+		// Shutdown clusters
+//		instanceA.shutdown();
+//		instanceB.shutdown();
 	}
 
 }
